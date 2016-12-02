@@ -1,10 +1,10 @@
 var express = require('express')
   , router = express.Router();
 
-router.use('/user', require('./users'));
+router.use('/pandas', require('./pandas'));
 
 router.get('/', function(req, res) {
-  res.render('Página inicial');
+  res.send('Página inicial');
 });
 
 module.exports = router;
