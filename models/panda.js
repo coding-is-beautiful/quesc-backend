@@ -1,17 +1,20 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/quesc');
+var Schema = mongoose.Schema;
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error'));
-
-db.once('open', function() {
-  var UserSchema = mongoose.Schema({
-    'nome': String
-  });
-
-  UserSchema.methods.test = function() {
-    console.log('test');
-  }
-
-  var User = mongoose.model('User', UserSchema);
+var PandaSchema = new Schema({
+  'nome': String,
+  'avatar': String,
+  'frase': String,
+  'mood': String
 });
+
+var Panda = module.exports = mongoose.model('Panda', PandaSchema);
+
+module.exports.giveBirthToaPanda = function(panda, callback) {
+  var newPanda = new Panda(panda);
+  newPanda.save(callback);
+}
+
+module.exports.getAllThePandas = function() {
+  return Panda.find();
+}

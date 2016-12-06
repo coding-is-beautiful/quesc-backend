@@ -1,5 +1,5 @@
 var express = require('express')
-  , router = express.Router();
+var router = express.Router()
 
 router.use('/pandas', require('./pandas'));
 

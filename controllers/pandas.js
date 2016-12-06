@@ -1,17 +1,22 @@
-var express = require('express')
-  , router = express.Router()
-  , pandify = require('../middlewares/pandify');
+var express = require('express');
+var router = express.Router();
+var mongoose = require('mongoose');
+var PandaMom = require('../models/panda');
+var bodyParser = require('body-parser');
 
+// middlewares
+var pandify = require('../middlewares/pandify');
+var jsonParser = bodyParser.json();
 
 router.get('/', function(req, res) {
-  res.send({
-    "nome": "Camarguinho",
-    "idade": 42
-  });
+  PandaMom.getAllThePandas()
+    .then(pandas => res.send(pandas));
 });
 
-router.post('/novo', pandify, function(req, res) {
-  res.send(req.query.nome);
+router.post('/novo', jsonParser, pandify, function(req, res) {
+  let newPanda = req.body;
+  PandaMom.giveBirthToaPanda(newPanda, err => console.log(err));
+  res.sendStatus(201);
 });
 
 module.exports = router;
