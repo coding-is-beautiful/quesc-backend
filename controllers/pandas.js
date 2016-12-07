@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 // middlewares
 var pandify = require('../middlewares/pandify');
+var validateJSON = require('../middlewares/validateJSON');
 var jsonParser = bodyParser.json();
 
 router.get('/', function(req, res) {
@@ -13,9 +14,9 @@ router.get('/', function(req, res) {
     .then(pandas => res.send(pandas));
 });
 
-router.post('/novo', jsonParser, pandify, function(req, res) {
+router.post('/novo', jsonParser, validateJSON, pandify, function(req, res) {
   let newPanda = req.body;
-  PandaMom.giveBirthToaPanda(newPanda, err => console.log(err));
+  PandaMom.giveBirthToaPanda(newPanda);
   res.sendStatus(201);
 });
 

@@ -10,9 +10,11 @@ var PandaSchema = new Schema({
 
 var Panda = module.exports = mongoose.model('Panda', PandaSchema);
 
-module.exports.giveBirthToaPanda = function(panda, callback) {
+module.exports.giveBirthToaPanda = function(panda) {
   var newPanda = new Panda(panda);
-  newPanda.save(callback);
+  newPanda.save(function(err) {
+    if(err) return console.error(err);
+  });
 }
 
 module.exports.getAllThePandas = function() {
